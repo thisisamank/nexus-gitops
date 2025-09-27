@@ -4,11 +4,36 @@ metadata:
   name: nexus-gitops-application-set
   namespace: argocd
 spec:
-    project: nexus
-    source:
+  generators:
+    - git:
+        repoURL: https://github.com/thisisamank/nexus-gitops.git
+        revision: HEAD
+        directories:
+          - path: apps/*
+  template:
+    metadata:
+      name: '{{path.basename}}'
+      namespace: argocd
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io
+      annotations:
+        argocd.argoproj.io/sync-wave: "1"
+    spec:
+      project: nexus
+      source:
         repoURL: https://github.com/thisisamank/nexus-gitops
         targetRevision: HEAD
-        path: charts/deployment
+        path: charts/app
         helm:
-            valueFiles:
-                - ../../apps/{{name}}/values.yaml
+          valueFiles:
+            - ../../apps/{{path.basename}}/values.yaml
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: default
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+
