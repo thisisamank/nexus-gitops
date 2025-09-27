@@ -1,8 +1,9 @@
-name: app-2
+---
+name: app-1
 project: nexus
 repoURL: https://github.com/thisisamank/nexus-gitops
 targetRevision: HEAD
 path: charts/app
-valueFile: apps/app-1/values.yaml
+valueFile: ../../apps/app-1/values.yaml
 namespace: default
 server: https://kubernetes.default.svc

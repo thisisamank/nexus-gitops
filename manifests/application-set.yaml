@@ -4,32 +4,11 @@ metadata:
   name: nexus-gitops-application-set
   namespace: argocd
 spec:
-  generators:
-    - git:
+    project: nexus
+    source:
         repoURL: https://github.com/thisisamank/nexus-gitops
-        revision: HEAD
-        files:
-          - path: deployment/*.yaml
-  template:
-    metadata:
-      name: '{{name}}'
-      annotations:
-        argocd.argoproj.io/sync-wave: "0"
-    spec:
-      project: '{{project}}'
-      source:
-        repoURL: '{{repoURL}}'
-        targetRevision: '{{targetRevision}}'
-        path: '{{path}}'
+        targetRevision: HEAD
+        path: charts/deployment
         helm:
-          valueFiles:
-            - '{{valueFile}}'
-      destination:
-        server: '{{server}}'
-        namespace: '{{namespace}}'
-      syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
-        syncOptions:
-          - CreateNamespace=true
+            valueFiles:
+                - ../../apps/{{name}}/values.yaml
