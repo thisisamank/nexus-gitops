@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: nexus-gitops-application-set
+  namespace: argocd
+spec:
+  generators:
+    - git:
+        repoURL:
+        revision: HEAD
+        files:
+          - 'apps/*.yaml'
+  template:
+    metadata:
+      name: '{{name}}'
+      annotations:
+        argocd.argoproj.io/sync-wave: "0"
+    spec:
+      project: '{{project}}'
+      source:
+        repoURL: '{{repoURL}}'
+        targetRevision: '{{targetRevision}}'
+        path: '{{path}}'
+        helm:
+          valueFiles:
+            - '{{valueFile}}'
+      destination:
+        server: '{{server}}'
+        namespace: '{{namespace}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true 
