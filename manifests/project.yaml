@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: nexus
+  namespace: argocd
+spec:
+  description: Homelab Project
+  sourceRepos:
+    - https://github.com/thisisamank/nexus-gitops
+  destinations:
+    - namespace: '*'
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'

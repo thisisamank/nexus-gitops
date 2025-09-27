@@ -6,10 +6,10 @@ metadata:
 spec:
   generators:
     - git:
-        repoURL:
+        repoURL: 'https://github.com/thisisamank/nexus-gitops'
         revision: HEAD
         files:
-          - 'apps/*.yaml'
+          - path: 'deployment/*.yaml'
   template:
     metadata:
       name: '{{name}}'
