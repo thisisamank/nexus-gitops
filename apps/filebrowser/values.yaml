@@ -1,0 +1,50 @@
+image:
+  repository: filebrowser/filebrowser
+  tag: "latest"
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  className: "traefik"
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+  hosts:
+    - host: files.home.thisisamank.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
+
+# FileBrowser does not require custom probes by default
+livenessProbe: null
+readinessProbe: null
+
+# Pod labels and annotations
+podLabels:
+  app: filebrowser
+  version: v1
+
+podAnnotations:
+  description: "Access files from the homelab using FileBrowser"
+
+volumes:
+  - name: filebrowser-root
+    hostPath:
+      path: /home/thisisamank/
+      type: Directory
+
+volumeMounts:
+  - name: filebrowser-root
+    mountPath: /srv
