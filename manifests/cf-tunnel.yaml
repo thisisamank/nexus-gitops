@@ -75,6 +75,6 @@ data:
       noTLSVerify: true
       http2Origin: true
     ingress:
-    - hostname: "*.home.thisisamank.com"
+    - hostname: "*.unidropapp.com"
       service: http://traefik.kube-system.svc.cluster.local:443
     - service: http_status:404

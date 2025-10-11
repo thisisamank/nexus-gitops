@@ -10,4 +10,4 @@ spec:
     name: letsencrypt-prod
     kind: ClusterIssuer
   dnsNames:
-  - 'files.home.thisisamank.com'
+  - 'files.unidropapp.com'
