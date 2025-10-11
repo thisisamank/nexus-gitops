@@ -19,3 +19,4 @@ spec:
   - 'jellyfin.pixr.in'
   - 'tv2.pixr.in'
   - 'qb.pixr.in'
+  - 'ntfy.pixr.in'
