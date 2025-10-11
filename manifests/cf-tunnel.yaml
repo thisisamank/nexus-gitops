@@ -75,6 +75,6 @@ data:
       noTLSVerify: true
       http2Origin: true
     ingress:
-    - hostname: "*.unidropapp.com"
-      service: http://traefik.kube-system.svc.cluster.local:443
+    - hostname: "*.pixr.in"
+      service: http://traefik.kube-system.svc.cluster.local:80
     - service: http_status:404
