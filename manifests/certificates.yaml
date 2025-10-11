@@ -11,3 +11,11 @@ spec:
     kind: ClusterIssuer
   dnsNames:
   - 'files.pixr.in'
+  - 'tv.pixr.in'
+  - 'radarr.pixr.in'
+  - 'sonarr.pixr.in'
+  - 'nzb.pixr.in'
+  - 'prowlarr.pixr.in'
+  - 'jellyfin.pixr.in'
+  - 'tv2.pixr.in'
+  - 'qb.pixr.in'

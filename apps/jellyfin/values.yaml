@@ -1,0 +1,72 @@
+# Jellyfin Application Configuration
+
+image:
+  repository: docker.io/jellyfin/jellyfin
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8096
+
+ingress:
+  enabled: true
+  className: "traefik"
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+  hosts:
+    - host: tv.pixr.in
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: nexus-tls-prod
+      hosts:
+        - tv.pixr.in
+
+resources: {}
+
+livenessProbe:
+  enabled: false
+  initialDelaySeconds: 10
+  httpGet:
+    path: /
+    port: 8096
+
+readinessProbe:
+  enabled: false
+  initialDelaySeconds: 10
+  httpGet:
+    path: /
+    port: 8096
+
+persistence:
+  config:
+    enabled: true
+    accessMode: ReadWriteOnce
+    size: 5Gi
+    storageClass: ""
+  # media:
+  #   enabled: true
+  #   type: hostPath
+  #   hostPath: /home/thisisamank
+  #   accessMode: ReadWriteOnce
+
+volumes:
+  - name: jellyfin-root
+    hostPath:
+      path: /home/thisisamank/jellyfin
+      type: Directory
+  - name: jellyfin-data
+    hostPath:
+      path: /mnt/hetzner/data
+      type: Directory
+
+volumeMounts:
+  - name: jellyfin-root
+    mountPath: /config
+  - name: jellyfin-data
+    mountPath: /data
+nodeSelector: {}
+tolerations: []
+affinity: {}
