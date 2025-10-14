@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: authentik-application-set
+  namespace: argocd
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/thisisamank/nexus-gitops.git
+        revision: HEAD
+        directories:
+          - path: apps/authentik
+  template:
+    metadata:
+      name: 'authentik'
+      namespace: argocd
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io
+      annotations:
+        argocd.argoproj.io/sync-wave: "1"
+    spec:
+      project: nexus
+      source:
+        repoURL: https://github.com/thisisamank/nexus-gitops
+        targetRevision: HEAD
+        path: charts/authentik
+        helm:
+          valueFiles:
+            - ../../apps/authentik/values.yaml
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: default
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
