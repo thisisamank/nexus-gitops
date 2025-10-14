@@ -1,0 +1,71 @@
+authentik:
+  error_reporting:
+    enabled: false
+  outposts:
+    enabled: false
+  secret_key: DkGqJhvL39uRWQxYvhSfsaWny775FYrhbIDNLS3hj3DxvKfn5wgm7DwsM56lyffH0ZKXbBOAqATlVX77
+  postgresql:
+    host: nexus-postgres-postgresql.default.svc.cluster.local
+    port: 5432
+    name: postgres
+    user: file:///postgres-creds/DB_USERNAME
+    password: file:///postgres-creds/DB_PASSWORD
+  redis:
+    host: nexus-redis-master.default.svc.cluster.local
+    port: 6379
+    password: file:///redis-creds/REDIS_PASSWORD
+# Use external Postgres and Redis provided via environment variables
+postgresql:
+  enabled: false
+
+redis:
+  enabled: false
+
+server:
+  replicas: 1
+  livenessProbe: null
+  readinessProbe: null
+  volumeMounts:
+    - name: postgres-creds
+      mountPath: /postgres-creds
+    - name: redis-creds
+      mountPath: /redis-creds
+  volumes:
+    - name: postgres-creds
+      secret:
+        secretName: postgres
+    - name: redis-creds
+      secret:
+        secretName: redis
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    annotations:
+      traefik.ingress.kubernetes.io/service.serversscheme: "https"
+      traefik.ingress.kubernetes.io/service.serverstransport: "traefik-authentik-skip-verify@kubernetescrd"
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    hosts:
+      - auth.pixr.in
+    tls:
+      - secretName: nexus-tls-prod
+        hosts:
+          - auth.pixr.in
+
+    https: false
+
+worker:
+  replicas: 1
+  livenessProbe: null
+  readinessProbe: null
+  volumeMounts:
+    - name: postgres-creds
+      mountPath: /postgres-creds
+    - name: redis-creds
+      mountPath: /redis-creds
+  volumes:
+    - name: postgres-creds
+      secret:
+        secretName: postgres
+    - name: redis-creds
+      secret:
+        secretName: redis

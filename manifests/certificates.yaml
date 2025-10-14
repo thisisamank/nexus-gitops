@@ -20,3 +20,4 @@ spec:
   - 'tv2.pixr.in'
   - 'qb.pixr.in'
   - 'ntfy.pixr.in'
+  - 'auth.pixr.in'

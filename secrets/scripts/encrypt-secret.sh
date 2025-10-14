@@ -1,4 +1,6 @@
 #!/bin/bash
+# TODO: this script should also put the file it is encrypting into .gitignore
+
 
 if ! command -v kubeseal &> /dev/null; then
     echo "Error: kubeseal could not be found." >&2
@@ -60,7 +62,7 @@ while IFS= read -r line; do
         echo "Warning: Skipping malformed line: $line" >&2
         continue
     fi
-    
+
     encoded_value=$(echo -n "$value" | base64)
 
     SECRET_MANIFEST="${SECRET_MANIFEST}\n  ${key}: ${encoded_value}"
