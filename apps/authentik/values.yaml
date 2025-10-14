@@ -41,17 +41,18 @@ server:
     enabled: true
     ingressClassName: traefik
     annotations:
-      traefik.ingress.kubernetes.io/service.serversscheme: "https"
-      traefik.ingress.kubernetes.io/service.serverstransport: "traefik-authentik-skip-verify@kubernetescrd"
       cert-manager.io/cluster-issuer: letsencrypt-prod
     hosts:
       - auth.pixr.in
+    paths:
+      - /
+    pathType: Prefix
     tls:
       - secretName: nexus-tls-prod
         hosts:
           - auth.pixr.in
 
-    https: false
+    https: true
 
 worker:
   replicas: 1

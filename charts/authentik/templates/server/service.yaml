@@ -9,10 +9,12 @@ metadata:
     {{- with .Values.server.service.labels }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
-  {{- with .Values.server.service.annotations }}
   annotations:
+    traefik.ingress.kubernetes.io/service.serversscheme: "https"
+    traefik.ingress.kubernetes.io/service.serverstransport: "kube-system-authentik-skip-verify@kubernetescrd"
+    {{- with .Values.server.service.annotations }}
     {{- toYaml . | nindent 4 }}
-  {{- end }}
+    {{- end }}
 spec:
   type: {{ .Values.server.service.type }}
   ports:
