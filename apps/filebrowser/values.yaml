@@ -13,6 +13,7 @@ ingress:
   className: "traefik"
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    traefik.ingress.kubernetes.io/router.middlewares: "default-authentik-forwardauth@kubernetescrd"
   hosts:
     - host: files.pixr.in
       paths:
