@@ -37,11 +37,10 @@ volumeMounts:
 
 resources:
   requests:
-    cpu: 250m
-    memory: 512Mi
+    cpu: 100m
+    memory: 128Mi
   limits:
-    cpu: 1000m
-    memory: 2048Mi
+    memory: 512Mi
 
 # FileBrowser does not require custom probes by default
 livenessProbe: null

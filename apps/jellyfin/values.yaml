@@ -24,7 +24,12 @@ ingress:
       hosts:
         - tv.pixr.in
 
-resources: {}
+resources:
+  limits:
+    memory: 1024Mi
+  requests:
+    cpu: 200m
+    memory: 512Mi
 
 livenessProbe:
   enabled: false

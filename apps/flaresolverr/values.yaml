@@ -23,7 +23,12 @@ ingress:
       hosts:
         - flaresolverr.pixr.in
 
-resources: {}
+resources:
+  limits:
+    memory: 1000Mi
+  requests:
+    cpu: 100m
+    memory: 500Mi
 
 livenessProbe:
   enabled: false
