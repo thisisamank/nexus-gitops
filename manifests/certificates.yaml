@@ -21,3 +21,4 @@ spec:
   - 'qb.pixr.in'
   - 'ntfy.pixr.in'
   - 'auth.pixr.in'
+  - 'registry.pixr.in'
