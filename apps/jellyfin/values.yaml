@@ -64,7 +64,7 @@ volumes:
       type: Directory
   - name: jellyfin-data
     hostPath:
-      path: /mnt/hetzner/data
+      path: /home/thisisamank/data
       type: Directory
 
 volumeMounts:

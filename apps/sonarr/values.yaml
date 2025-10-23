@@ -67,7 +67,7 @@ volumes:
       type: Directory
   - name: sonarr-data
     hostPath:
-      path: /mnt/hetzner/data
+      path: /home/thisisamank/data
       type: Directory
 
 volumeMounts:

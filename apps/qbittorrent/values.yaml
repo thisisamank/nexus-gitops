@@ -76,7 +76,7 @@ volumes:
       type: Directory
   - name: qbittorrent-data
     hostPath:
-      path: /mnt/hetzner/data
+      path: /home/thisisamank/data
       type: Directory
   # - name: vpn-files
   #   projected:
