@@ -9,7 +9,8 @@ service:
   type: ClusterIP
   port: 8096
 
-ingress:
+
+
   enabled: true
   className: "traefik"
   annotations:
@@ -72,6 +73,11 @@ volumeMounts:
     mountPath: /config
   - name: jellyfin-data
     mountPath: /data
-nodeSelector: {}
-tolerations: []
+nodeSelector:
+  node-type: staging
+tolerations:
+  - key: node-type
+    operator: Equal
+    value: staging
+    effect: NoSchedule
 affinity: {}
