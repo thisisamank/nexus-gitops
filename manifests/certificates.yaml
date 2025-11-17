@@ -23,3 +23,4 @@ spec:
   - 'auth.pixr.in'
   - 'registry.pixr.in'
   - 'longhorn.pixr.in'
+  - 'speedtest.pixr.in'
